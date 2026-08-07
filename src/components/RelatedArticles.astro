@@ -1,0 +1,29 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import ArticleCard from './ArticleCard.astro';
+
+interface Props {
+  articles: CollectionEntry<'articles'>[];
+  title?: string;
+}
+
+const { articles, title = 'Sigue aprendiendo' } = Astro.props;
+---
+
+{
+  articles.length > 0 && (
+    <section class="related section--tight">
+      <div class="section-heading">
+        <div class="section-heading__text">
+          <p class="eyebrow">Relacionados</p>
+          <h2>{title}</h2>
+        </div>
+      </div>
+      <div class="grid-articles">
+        {articles.map((article, index) => (
+          <ArticleCard article={article} index={index} variant="compact" />
+        ))}
+      </div>
+    </section>
+  )
+}

@@ -1,0 +1,140 @@
+---
+import Logo from './Logo.astro';
+
+const year = new Date().getFullYear();
+---
+
+<footer class="site-footer">
+  <div class="container site-footer__grid">
+    <div class="site-footer__brand">
+      <a href="/" class="site-footer__logo" aria-label="Inicio">
+        <Logo size="md" />
+      </a>
+      <p class="site-footer__tagline">Aprender es gratis. Compartir también.</p>
+      <p class="site-footer__desc">
+        Plataforma educativa sin ánimo de lucro para compartir conocimiento claro, visual y
+        accesible. Sin humo. Sin paywalls.
+      </p>
+    </div>
+
+    <div>
+      <p class="site-footer__label">Explorar</p>
+      <ul>
+        <li><a href="/articulos/">Artículos</a></li>
+        <li><a href="/categorias/">Categorías</a></li>
+        <li><a href="/sobre/">Sobre el proyecto</a></li>
+      </ul>
+    </div>
+
+    <div>
+      <p class="site-footer__label">Categorías</p>
+      <ul>
+        <li><a href="/categorias/tecnologia/">Tecnología</a></li>
+        <li><a href="/categorias/programacion/">Programación</a></li>
+        <li><a href="/categorias/cocina/">Cocina</a></li>
+        <li><a href="/categorias/ciencia/">Ciencia</a></li>
+      </ul>
+    </div>
+
+    <div>
+      <p class="site-footer__label">Comunidad</p>
+      <ul>
+        <li><a href="/sobre/#contribuir">Cómo contribuir</a></li>
+        <li><a href="/sobre/#valores">Valores</a></li>
+        <li><a href="/rss.xml">RSS</a></li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="container site-footer__bottom">
+    <p>© {year} Que hay pa' aprender? · Proyecto abierto y sin ánimo de lucro</p>
+    <p class="site-footer__motto">Prende el cerebro. Apaga la ignorancia.</p>
+  </div>
+</footer>
+
+<style>
+  .site-footer {
+    margin-top: auto;
+    padding-top: clamp(3rem, 6vw, 5rem);
+    padding-bottom: var(--space-8);
+    background:
+      radial-gradient(ellipse 50% 40% at 10% 0%, rgba(230, 168, 0, 0.08), transparent 60%),
+      linear-gradient(180deg, var(--color-bg) 0%, #eef1f6 100%);
+    border-top: 1px solid var(--color-border);
+  }
+
+  .site-footer__grid {
+    display: grid;
+    gap: var(--space-8);
+    grid-template-columns: 1fr;
+    padding-bottom: var(--space-10);
+  }
+
+  .site-footer__logo {
+    text-decoration: none;
+    display: inline-flex;
+  }
+
+  .site-footer__tagline {
+    margin-top: var(--space-5);
+    font-family: var(--font-serif);
+    font-size: var(--text-xl);
+    color: var(--color-ink);
+    letter-spacing: -0.02em;
+  }
+
+  .site-footer__desc {
+    margin-top: var(--space-3);
+    color: var(--color-ink-muted);
+    max-width: 28rem;
+    font-size: var(--text-sm);
+  }
+
+  .site-footer__label {
+    font-size: var(--text-xs);
+    font-weight: 750;
+    letter-spacing: 0.07em;
+    text-transform: uppercase;
+    color: var(--color-ink-muted);
+    margin-bottom: var(--space-4);
+  }
+
+  .site-footer ul {
+    list-style: none;
+    display: grid;
+    gap: 0.65rem;
+  }
+
+  .site-footer a {
+    color: var(--color-ink-soft);
+    text-decoration: none;
+    font-size: var(--text-sm);
+    font-weight: 550;
+  }
+
+  .site-footer a:hover {
+    color: var(--color-blue);
+  }
+
+  .site-footer__bottom {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-3);
+    justify-content: space-between;
+    padding-top: var(--space-5);
+    border-top: 1px solid var(--color-border);
+    color: var(--color-ink-muted);
+    font-size: var(--text-xs);
+  }
+
+  .site-footer__motto {
+    color: var(--color-blue);
+    font-weight: 650;
+  }
+
+  @media (min-width: 768px) {
+    .site-footer__grid {
+      grid-template-columns: 1.6fr repeat(3, 1fr);
+    }
+  }
+</style>

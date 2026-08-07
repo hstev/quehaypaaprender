@@ -1,0 +1,141 @@
+---
+import { nextLogoId } from '../lib/id';
+
+interface Props {
+  size?: 'sm' | 'md' | 'lg' | 'xl';
+  withWordmark?: boolean;
+  class?: string;
+}
+
+const { size = 'md', withWordmark = true, class: className = '' } = Astro.props;
+
+const sizes = {
+  sm: 28,
+  md: 36,
+  lg: 48,
+  xl: 72,
+} as const;
+
+const px = sizes[size];
+const uid = nextLogoId('logo');
+const flameId = `${uid}-flame`;
+const brainId = `${uid}-brain`;
+---
+
+<span class:list={['logo', `logo--${size}`, className]}>
+  <svg
+    class="logo__mark"
+    width={px}
+    height={px}
+    viewBox="0 0 64 64"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+    aria-hidden="true"
+  >
+    <defs>
+      <linearGradient id={flameId} x1="32" y1="4" x2="32" y2="28" gradientUnits="userSpaceOnUse">
+        <stop offset="0%" stop-color="#F5C518" />
+        <stop offset="55%" stop-color="#E6A800" />
+        <stop offset="100%" stop-color="#C23A3A" />
+      </linearGradient>
+      <linearGradient id={brainId} x1="12" y1="20" x2="52" y2="56" gradientUnits="userSpaceOnUse">
+        <stop offset="0%" stop-color="#1B4F8A" />
+        <stop offset="100%" stop-color="#143A66" />
+      </linearGradient>
+    </defs>
+
+    <!-- Flame -->
+    <g class="logo__flame">
+      <path
+        d="M32 6c2.2 4.8 1.2 8.2-1.4 11.2 4.8-1.2 8.4 1.6 9.8 5.6-1.8-1-3.8-1.2-5.6-.4 5.2 2.2 7.6 7 6.2 12.2-3.6-3.4-8.2-3.8-12.4-1.2C25.2 26.8 22 20.4 24.8 14.2 27.2 16.8 29.2 15.4 32 6Z"
+        fill={`url(#${flameId})`}
+      />
+      <path
+        d="M31.2 16.5c.8 2.2.2 3.8-1 5.2 2.2-.3 3.7.9 4.2 2.6-2.4.8-3.4 2.8-3 5.2-1.8-1.4-4-1.5-5.8-.2.4-3.4 1.8-6.4 4.2-8.4.4-1.6.8-3 1.4-4.4Z"
+        fill="#FFF4D6"
+        opacity="0.9"
+      />
+    </g>
+
+    <!-- Brain -->
+    <path
+      class="logo__brain"
+      d="M22.5 28.5c-4.2.4-7.5 3.8-7.5 8.2 0 2.2.8 4.2 2.2 5.7-.4 1-.6 2.1-.6 3.2 0 4.6 3.4 8.4 7.8 9.1 1.4 2.2 3.8 3.6 6.6 3.6h4c2.8 0 5.2-1.4 6.6-3.6 4.4-.7 7.8-4.5 7.8-9.1 0-1.1-.2-2.2-.6-3.2 1.4-1.5 2.2-3.5 2.2-5.7 0-4.2-3-7.6-7-8.2-1-3.2-4-5.5-7.5-5.5-2.4 0-4.6 1.1-6 2.8-1.2-1-2.8-1.6-4.5-1.5-2.2.1-4.1 1.3-5.1 3.2Z"
+      fill={`url(#${brainId})`}
+    />
+    <path
+      d="M32 30.5v24.5M32 38.5c-3.2-1.2-6.5-.8-9.2 1M32 38.5c3.2-1.2 6.5-.8 9.2 1M32 46c-3.5-.8-7-.2-9.8 1.8M32 46c3.5-.8 7-.2 9.8 1.8M24.5 33.5c2 .8 3.8 1 5.5.6M39.5 33.5c-2 .8-3.8 1-5.5.6"
+      stroke="#E8F0F8"
+      stroke-width="1.6"
+      stroke-linecap="round"
+      opacity="0.85"
+    />
+    <circle cx="25.5" cy="35.5" r="1.2" fill="#E6A800" />
+    <circle cx="38.5" cy="35.5" r="1.2" fill="#E6A800" />
+  </svg>
+
+  {
+    withWordmark && (
+      <span class="logo__wordmark">
+        <span class="logo__name">Que hay pa' aprender?</span>
+      </span>
+    )
+  }
+</span>
+
+<style>
+  .logo {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.7rem;
+    text-decoration: none;
+    color: var(--color-ink);
+    min-width: 0;
+  }
+
+  .logo__mark {
+    flex-shrink: 0;
+  }
+
+  .logo__flame {
+    transform-origin: 32px 20px;
+    animation: flame-flicker 2.8s ease-in-out infinite;
+  }
+
+  .logo__wordmark {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+  }
+
+  .logo__name {
+    font-family: var(--font-sans);
+    font-weight: 750;
+    letter-spacing: -0.035em;
+    line-height: 1.15;
+    color: var(--color-ink);
+  }
+
+  .logo--sm .logo__name {
+    font-size: 0.92rem;
+  }
+
+  .logo--md .logo__name {
+    font-size: 1.02rem;
+  }
+
+  .logo--lg .logo__name {
+    font-size: 1.2rem;
+  }
+
+  .logo--xl .logo__name {
+    font-size: 1.45rem;
+  }
+
+  @media (max-width: 420px) {
+    .logo--md .logo__name {
+      font-size: 0.92rem;
+      max-width: 11.5rem;
+    }
+  }
+</style>

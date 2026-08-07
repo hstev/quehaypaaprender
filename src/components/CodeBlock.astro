@@ -1,0 +1,47 @@
+---
+/**
+ * Optional MDX code block wrapper for custom callouts around highlighted code.
+ * Astro Markdown already provides Shiki highlighting for fenced blocks.
+ */
+interface Props {
+  title?: string;
+}
+
+const { title } = Astro.props;
+---
+
+<figure class="code-block">
+  {title && <figcaption class="code-block__title">{title}</figcaption>}
+  <div class="code-block__body">
+    <slot />
+  </div>
+</figure>
+
+<style>
+  .code-block {
+    margin: 1.75em 0;
+    border-radius: var(--radius-md);
+    overflow: hidden;
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    box-shadow: var(--shadow-sm);
+  }
+
+  .code-block__title {
+    font-family: var(--font-sans);
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    padding: 0.7rem 1rem;
+    background: #152033;
+    color: rgba(232, 237, 245, 0.72);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  }
+
+  .code-block__body :global(pre) {
+    margin: 0 !important;
+    border: 0 !important;
+    border-radius: 0 !important;
+    box-shadow: none !important;
+  }
+</style>

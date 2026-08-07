@@ -1,0 +1,209 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Hero from '../components/Hero.astro';
+import ArticleCard from '../components/ArticleCard.astro';
+import CategoryCard from '../components/CategoryCard.astro';
+import NewsletterCTA from '../components/NewsletterCTA.astro';
+import {
+  getFeaturedArticles,
+  getPopularArticles,
+  getRecentArticles,
+  getUsedCategories,
+} from '../lib/articles';
+
+const featured = await getFeaturedArticles(3);
+const recent = await getRecentArticles(6);
+const popular = await getPopularArticles(3);
+const categories = (await getUsedCategories()).slice(0, 6);
+---
+
+<BaseLayout
+  title="Que hay pa' aprender?"
+  description="Conocimiento para todos. Gratis, abierto y sin humo. Artículos educativos claros sobre tecnología, cocina, ciencia y más."
+>
+  <Hero />
+
+  <section class="section">
+    <div class="container">
+      <div class="section-heading">
+        <div class="section-heading__text">
+          <p class="eyebrow">Temáticas</p>
+          <h2>Categorías para explorar</h2>
+          <p>Desde Kubernetes hasta arepas: elige un camino e inicia con un artículo corto.</p>
+        </div>
+        <a class="btn btn--secondary" href="/categorias/">Todas las categorías</a>
+      </div>
+      <div class="grid-categories">
+        {categories.map((category, index) => <CategoryCard category={category} index={index} />)}
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--muted">
+    <div class="container">
+      <div class="section-heading">
+        <div class="section-heading__text">
+          <p class="eyebrow">Recién publicados</p>
+          <h2>Artículos recientes</h2>
+          <p>Piezas editoriales breves, pensadas para entender un concepto y seguir adelante.</p>
+        </div>
+        <a class="btn btn--secondary" href="/articulos/">Ver todos</a>
+      </div>
+      <div class="grid-articles grid-articles--featured">
+        {
+          recent.slice(0, 3).map((article, index) => (
+            <ArticleCard
+              article={article}
+              index={index}
+              variant={index === 0 ? 'featured' : 'default'}
+            />
+          ))
+        }
+      </div>
+      <div class="grid-articles home-recent-more">
+        {
+          recent.slice(3).map((article, index) => (
+            <ArticleCard article={article} index={index + 3} />
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container home-split">
+      <div>
+        <div class="section-heading">
+          <div class="section-heading__text">
+            <p class="eyebrow">Recomendados</p>
+            <h2>Para prender el cerebro hoy</h2>
+            <p>Una selección de lecturas populares para arrancar con buen impulso.</p>
+          </div>
+        </div>
+        <div class="home-popular">
+          {
+            popular.map((article, index) => (
+              <ArticleCard article={article} index={index} variant="horizontal" />
+            ))
+          }
+        </div>
+      </div>
+
+      <aside class="purpose-panel">
+        <p class="eyebrow">Propósito</p>
+        <h2>Conocimiento sin barreras</h2>
+        <p>
+          “Que hay pa' aprender?” nace para compartir saber de forma sencilla, visual y accesible.
+          Sin backend opaco, sin muro de pago: solo Markdown, diseño cuidado y ganas de enseñar.
+        </p>
+        <ul>
+          <li>Contenido estático y abierto</li>
+          <li>Lectura clara en móvil y desktop</li>
+          <li>Identidad colombiana, estética premium</li>
+        </ul>
+        <a class="btn btn--blue" href="/sobre/">Sobre el proyecto</a>
+      </aside>
+    </div>
+  </section>
+
+  {
+    featured.length > 0 && (
+      <section class="section section--tight">
+        <div class="container">
+          <div class="section-heading">
+            <div class="section-heading__text">
+              <p class="eyebrow">Destacados</p>
+              <h2>Lo esencial, bien explicado</h2>
+            </div>
+          </div>
+          <div class="grid-articles">
+            {featured.map((article, index) => (
+              <ArticleCard article={article} index={index} />
+            ))}
+          </div>
+        </div>
+      </section>
+    )
+  }
+
+  <div class="container section--tight">
+    <NewsletterCTA />
+  </div>
+</BaseLayout>
+
+<style>
+  .section--muted {
+    background:
+      radial-gradient(ellipse 40% 50% at 100% 0%, rgba(27, 79, 138, 0.06), transparent 60%),
+      linear-gradient(180deg, rgba(255, 255, 255, 0.4), transparent);
+  }
+
+  .home-recent-more {
+    margin-top: var(--space-5);
+  }
+
+  .home-split {
+    display: grid;
+    gap: clamp(2rem, 5vw, 3rem);
+  }
+
+  .home-popular {
+    display: grid;
+    gap: var(--space-4);
+  }
+
+  .purpose-panel {
+    padding: clamp(1.5rem, 3vw, 2rem);
+    border-radius: var(--radius-xl);
+    background: var(--color-bg-elevated);
+    border: 1px solid var(--color-border);
+    box-shadow: var(--shadow-sm);
+    align-self: start;
+  }
+
+  .purpose-panel h2 {
+    font-family: var(--font-serif);
+    font-size: var(--text-3xl);
+    font-weight: 550;
+    margin-top: 0.5rem;
+    letter-spacing: -0.03em;
+  }
+
+  .purpose-panel p {
+    margin-top: 0.9rem;
+    color: var(--color-ink-soft);
+  }
+
+  .purpose-panel ul {
+    list-style: none;
+    display: grid;
+    gap: 0.65rem;
+    margin: 1.25rem 0 1.5rem;
+  }
+
+  .purpose-panel li {
+    position: relative;
+    padding-left: 1.2rem;
+    font-size: var(--text-sm);
+    color: var(--color-ink-soft);
+    font-weight: 600;
+  }
+
+  .purpose-panel li::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0.45rem;
+    width: 0.5rem;
+    height: 0.5rem;
+    border-radius: 50%;
+    background: var(--color-yellow);
+  }
+
+  @media (min-width: 960px) {
+    .home-split {
+      grid-template-columns: 1.25fr 0.85fr;
+      align-items: start;
+    }
+  }
+</style>

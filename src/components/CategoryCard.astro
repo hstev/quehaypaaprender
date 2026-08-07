@@ -1,0 +1,129 @@
+---
+import type { CategoryMeta } from '../lib/categories';
+
+interface Props {
+  category: CategoryMeta & { count?: number };
+  index?: number;
+}
+
+const { category, index = 0 } = Astro.props;
+---
+
+<a
+  class:list={['category-card', `category-card--${category.accent}`, `category-card--v${index % 3}`]}
+  href={`/categorias/${category.slug}/`}
+>
+  <div class="category-card__top">
+    <span class="category-card__accent" aria-hidden="true"></span>
+    {
+      typeof category.count === 'number' && (
+        <span class="category-card__count">
+          {category.count} {category.count === 1 ? 'artículo' : 'artículos'}
+        </span>
+      )
+    }
+  </div>
+  <h3>{category.name}</h3>
+  <p>{category.description}</p>
+  <span class="category-card__cta">
+    Explorar
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+      <path
+        d="M5 12h14M13 6l6 6-6 6"
+        stroke="currentColor"
+        stroke-width="1.8"
+        stroke-linecap="round"
+        stroke-linejoin="round"></path>
+    </svg>
+  </span>
+</a>
+
+<style>
+  .category-card {
+    display: flex;
+    flex-direction: column;
+    gap: 0.7rem;
+    min-height: 11.5rem;
+    padding: 1.25rem 1.3rem 1.35rem;
+    border-radius: var(--radius-xl);
+    background: var(--color-bg-elevated);
+    border: 1px solid var(--color-border);
+    box-shadow: var(--shadow-sm);
+    text-decoration: none;
+    color: inherit;
+    transition:
+      transform var(--duration) var(--ease-out),
+      box-shadow var(--duration) var(--ease-out),
+      border-color var(--duration) var(--ease-soft);
+  }
+
+  .category-card:hover {
+    transform: translateY(-3px);
+    box-shadow: var(--shadow-md);
+    border-color: rgba(27, 79, 138, 0.18);
+    text-decoration: none;
+    color: inherit;
+  }
+
+  .category-card__top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.75rem;
+  }
+
+  .category-card__accent {
+    width: 2.25rem;
+    height: 0.35rem;
+    border-radius: var(--radius-full);
+    background: var(--color-yellow);
+  }
+
+  .category-card--blue .category-card__accent {
+    background: var(--color-blue);
+  }
+  .category-card--red .category-card__accent {
+    background: var(--color-red);
+  }
+  .category-card--neutral .category-card__accent {
+    background: var(--color-ink-muted);
+  }
+
+  .category-card__count {
+    font-size: var(--text-xs);
+    font-weight: 650;
+    color: var(--color-ink-muted);
+  }
+
+  .category-card h3 {
+    font-family: var(--font-serif);
+    font-size: var(--text-xl);
+    font-weight: 550;
+    letter-spacing: -0.03em;
+  }
+
+  .category-card p {
+    color: var(--color-ink-muted);
+    font-size: var(--text-sm);
+    line-height: 1.5;
+    flex: 1;
+  }
+
+  .category-card__cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    margin-top: 0.35rem;
+    font-size: var(--text-sm);
+    font-weight: 700;
+    color: var(--color-blue);
+  }
+
+  .category-card--v1 {
+    background: linear-gradient(180deg, #ffffff, #f8fafc);
+  }
+
+  .category-card--v2 {
+    background: linear-gradient(160deg, #ffffff 40%, #fff8e8);
+  }
+</style>

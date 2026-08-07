@@ -1,0 +1,217 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import NewsletterCTA from '../../components/NewsletterCTA.astro';
+import Logo from '../../components/Logo.astro';
+---
+
+<BaseLayout
+  title="Sobre el proyecto"
+  description="Que hay pa' aprender? es una plataforma educativa sin ánimo de lucro para compartir conocimiento claro, visual y accesible."
+>
+  <section class="about">
+    <div class="container about__hero">
+      <Logo size="lg" withWordmark={false} />
+      <p class="eyebrow">Sin ánimo de lucro</p>
+      <h1>Sobre el proyecto</h1>
+      <p class="about__lead">
+        “Que hay pa' aprender?” es una plataforma online para compartir conocimiento de forma
+        sencilla, visual y accesible. Gratis. Abierta. Sin humo.
+      </p>
+    </div>
+
+    <div class="container about__grid">
+      <article class="about__card">
+        <h2>Qué es</h2>
+        <p>
+          Un espacio con artículos educativos cortos sobre conceptos específicos: desde preparar
+          arepas hasta desplegar un cluster de Kubernetes. El contenido vive en Markdown dentro del
+          propio proyecto.
+        </p>
+      </article>
+
+      <article class="about__card">
+        <h2>Por qué existe</h2>
+        <p>
+          Porque aprender no debería sentirse como un laberinto de jerga, paywalls o tutorials
+          eternos. Queremos piezas claras, con buena tipografía y una identidad cercana —
+          colombiana, humana y moderna.
+        </p>
+      </article>
+
+      <article class="about__card" id="valores">
+        <h2>Valores</h2>
+        <ul>
+          <li>Claridad antes que pose</li>
+          <li>Acceso gratuito y abierto</li>
+          <li>Diseño cuidado como acto de respeto</li>
+          <li>Conocimiento para compartir, no para acumular</li>
+        </ul>
+      </article>
+    </div>
+
+    <div class="container about__contribute" id="contribuir">
+      <div class="about__contribute-panel">
+        <p class="eyebrow">Contribuir</p>
+        <h2>Agregar un artículo es crear un Markdown</h2>
+        <p>
+          No hay CMS externo ni base de datos. Para publicar, crea un archivo en
+          <code>src/content/articles/</code> con frontmatter y listo: Astro genera la página.
+        </p>
+
+        <pre class="about__code"><code>---
+title: "Tu concepto claro"
+description: "Una frase que diga qué aprenderá la persona."
+category: "Tecnología"
+tags:
+  - ejemplo
+author: "Tu nombre"
+publishedAt: 2026-08-07
+featured: false
+---
+
+Escribe aquí con buena estructura, ejemplos y tono humano.</code></pre>
+
+        <div class="btn-group">
+          <a class="btn btn--primary" href="/articulos/">Ver artículos</a>
+          <a class="btn btn--secondary" href="/categorias/">Ver categorías</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="container">
+      <NewsletterCTA
+        title="Aprender es gratis. Compartir también."
+        description="Explora el catálogo o aporta un artículo nuevo. La plataforma está lista para crecer archivo por archivo."
+      />
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .about {
+    padding: clamp(2rem, 4vw, 3.5rem) 0 clamp(2rem, 4vw, 3rem);
+  }
+
+  .about__hero {
+    max-width: 44rem;
+    margin-bottom: clamp(2rem, 5vw, 3.5rem);
+  }
+
+  .about__hero :global(.logo) {
+    margin-bottom: 1.25rem;
+  }
+
+  .about__hero h1 {
+    font-family: var(--font-serif);
+    font-size: var(--text-4xl);
+    font-weight: 550;
+    letter-spacing: -0.04em;
+    margin-top: 0.5rem;
+  }
+
+  .about__lead {
+    margin-top: 1rem;
+    font-size: var(--text-lg);
+    color: var(--color-ink-soft);
+    line-height: 1.6;
+  }
+
+  .about__grid {
+    display: grid;
+    gap: 1rem;
+    margin-bottom: clamp(2rem, 5vw, 3.5rem);
+  }
+
+  .about__card {
+    padding: 1.4rem 1.35rem;
+    border-radius: var(--radius-xl);
+    background: var(--color-bg-elevated);
+    border: 1px solid var(--color-border);
+    box-shadow: var(--shadow-xs);
+  }
+
+  .about__card h2 {
+    font-family: var(--font-serif);
+    font-size: var(--text-2xl);
+    font-weight: 550;
+    margin-bottom: 0.7rem;
+  }
+
+  .about__card p,
+  .about__card li {
+    color: var(--color-ink-soft);
+  }
+
+  .about__card ul {
+    list-style: none;
+    display: grid;
+    gap: 0.55rem;
+  }
+
+  .about__card li {
+    position: relative;
+    padding-left: 1rem;
+  }
+
+  .about__card li::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0.55rem;
+    width: 0.45rem;
+    height: 0.45rem;
+    border-radius: 50%;
+    background: var(--color-blue);
+  }
+
+  .about__contribute-panel {
+    padding: clamp(1.5rem, 4vw, 2.25rem);
+    border-radius: calc(var(--radius-xl) + 2px);
+    background:
+      radial-gradient(ellipse 50% 60% at 100% 0%, rgba(230, 168, 0, 0.14), transparent 55%),
+      var(--color-bg-elevated);
+    border: 1px solid var(--color-border);
+    box-shadow: var(--shadow-sm);
+    margin-bottom: 2rem;
+  }
+
+  .about__contribute-panel h2 {
+    font-family: var(--font-serif);
+    font-size: var(--text-3xl);
+    font-weight: 550;
+    margin-top: 0.45rem;
+    max-width: 18ch;
+  }
+
+  .about__contribute-panel > p {
+    margin-top: 0.85rem;
+    max-width: 42rem;
+    color: var(--color-ink-soft);
+  }
+
+  .about__contribute-panel code {
+    font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+    font-size: 0.86em;
+    padding: 0.1em 0.35em;
+    border-radius: 6px;
+    background: var(--color-bg-muted);
+  }
+
+  .about__code {
+    margin: 1.35rem 0 1.5rem;
+    padding: 1.1rem 1.15rem;
+    overflow-x: auto;
+    border-radius: var(--radius-md);
+    background: #0f1724;
+    color: #e8edf5;
+    font-size: 0.84rem;
+    line-height: 1.55;
+    border: 1px solid rgba(255, 255, 255, 0.06);
+  }
+
+  @media (min-width: 800px) {
+    .about__grid {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+</style>

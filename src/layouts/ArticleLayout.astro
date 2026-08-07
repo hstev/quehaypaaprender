@@ -1,0 +1,185 @@
+---
+import BaseLayout from './BaseLayout.astro';
+import Breadcrumbs from '../components/Breadcrumbs.astro';
+import ArticleHeader from '../components/ArticleHeader.astro';
+import TableOfContents from '../components/TableOfContents.astro';
+import RelatedArticles from '../components/RelatedArticles.astro';
+import NewsletterCTA from '../components/NewsletterCTA.astro';
+import type { CollectionEntry } from 'astro:content';
+import { getArticleHref } from '../lib/articles';
+import { absoluteUrl } from '../lib/utils';
+
+interface Props {
+  article: CollectionEntry<'articles'>;
+  headings: { depth: number; slug: string; text: string }[];
+  related: CollectionEntry<'articles'>[];
+  prev?: CollectionEntry<'articles'> | null;
+  next?: CollectionEntry<'articles'> | null;
+}
+
+const { article, headings, related, prev, next } = Astro.props;
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'Article',
+  headline: article.data.title,
+  description: article.data.description,
+  datePublished: article.data.publishedAt.toISOString(),
+  dateModified: (article.data.updatedAt ?? article.data.publishedAt).toISOString(),
+  author: {
+    '@type': 'Person',
+    name: article.data.author,
+  },
+  publisher: {
+    '@type': 'Organization',
+    name: "Que hay pa' aprender?",
+    url: absoluteUrl('/'),
+  },
+  mainEntityOfPage: absoluteUrl(getArticleHref(article)),
+  keywords: article.data.tags.join(', '),
+  articleSection: article.data.category,
+  inLanguage: 'es-CO',
+};
+---
+
+<BaseLayout
+  title={article.data.title}
+  description={article.data.description}
+  type="article"
+  publishedTime={article.data.publishedAt}
+  author={article.data.author}
+  jsonLd={jsonLd}
+>
+  <article class="article-page">
+    <div class="container article-page__shell">
+      <Breadcrumbs
+        items={[
+          { label: 'Inicio', href: '/' },
+          { label: 'Artículos', href: '/articulos/' },
+          { label: article.data.title },
+        ]}
+      />
+
+      <ArticleHeader article={article} />
+
+      <div class="article-page__layout">
+        <aside class="article-page__aside">
+          <TableOfContents headings={headings} />
+        </aside>
+
+        <div class="article-page__content prose">
+          <slot />
+        </div>
+      </div>
+
+      <nav class="article-nav" aria-label="Artículos adyacentes">
+        {
+          prev ? (
+            <a class="article-nav__item" href={getArticleHref(prev)}>
+              <span>Anterior</span>
+              <strong>{prev.data.title}</strong>
+            </a>
+          ) : (
+            <span />
+          )
+        }
+        {
+          next ? (
+            <a class="article-nav__item article-nav__item--next" href={getArticleHref(next)}>
+              <span>Siguiente</span>
+              <strong>{next.data.title}</strong>
+            </a>
+          ) : (
+            <span />
+          )
+        }
+      </nav>
+
+      <RelatedArticles articles={related} />
+    </div>
+
+    <div class="container">
+      <NewsletterCTA />
+    </div>
+  </article>
+</BaseLayout>
+
+<style>
+  .article-page {
+    padding: clamp(1.5rem, 3vw, 2.5rem) 0 clamp(2rem, 4vw, 3rem);
+  }
+
+  .article-page__layout {
+    display: grid;
+    gap: 2rem;
+  }
+
+  .article-page__aside {
+    display: none;
+  }
+
+  .article-nav {
+    display: grid;
+    gap: 1rem;
+    grid-template-columns: 1fr;
+    margin-top: 3rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--color-border);
+  }
+
+  .article-nav__item {
+    display: grid;
+    gap: 0.35rem;
+    padding: 1.1rem 1.2rem;
+    border-radius: var(--radius-lg);
+    border: 1px solid var(--color-border);
+    background: var(--color-bg-elevated);
+    text-decoration: none;
+    transition:
+      transform var(--duration-fast) var(--ease-out),
+      box-shadow var(--duration) var(--ease-out);
+  }
+
+  .article-nav__item:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-md);
+    color: inherit;
+  }
+
+  .article-nav__item span {
+    font-size: var(--text-xs);
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    color: var(--color-ink-muted);
+  }
+
+  .article-nav__item strong {
+    font-family: var(--font-serif);
+    font-size: var(--text-lg);
+    font-weight: 550;
+    letter-spacing: -0.02em;
+  }
+
+  .article-nav__item--next {
+    text-align: right;
+  }
+
+  @media (min-width: 960px) {
+    .article-page__layout {
+      grid-template-columns: 15rem minmax(0, 1fr);
+      gap: 2.5rem;
+      align-items: start;
+    }
+
+    .article-page__aside {
+      display: block;
+      position: sticky;
+      top: calc(var(--header-height) + 1.25rem);
+    }
+
+    .article-nav {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+</style>

@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" fill="none">
+  <rect width="1200" height="630" fill="#F7F8FA"/>
+  <circle cx="980" cy="120" r="220" fill="#E6A800" opacity="0.16"/>
+  <circle cx="160" cy="520" r="200" fill="#1B4F8A" opacity="0.12"/>
+  <circle cx="640" cy="560" r="140" fill="#C23A3A" opacity="0.08"/>
+  <g transform="translate(120 170)">
+    <path d="M72 12c5 11 2.7 18.5-3.2 25.2 10.8-2.7 18.9 3.6 22 12.6-4-2.3-8.5-2.7-12.6-.9 11.7 5 17.1 15.8 14 27.5-8.1-7.7-18.5-8.6-28-2.7C55.7 58.8 48.5 44.4 54.8 30.4 60.2 36.3 64.7 33.2 72 12Z" fill="#E6A800"/>
+    <path d="M50.6 62.6c-9.5.9-16.9 8.6-16.9 18.5 0 5 1.8 9.5 5 12.8-.9 2.3-1.4 4.7-1.4 7.2 0 10.4 7.7 18.9 17.6 20.5 3.2 5 8.6 8.1 14.9 8.1h9c6.3 0 11.7-3.2 14.9-8.1 9.9-1.6 17.6-10.1 17.6-20.5 0-2.5-.5-5-1.4-7.2 3.2-3.4 5-7.9 5-12.8 0-9.5-6.8-17.1-15.8-18.5-2.3-7.2-9-12.4-16.9-12.4-5.4 0-10.4 2.5-13.5 6.3-2.7-2.3-6.3-3.6-10.1-3.4-5 .2-9.2 2.9-11.5 7.2Z" fill="#1B4F8A"/>
+  </g>
+  <text x="120" y="360" fill="#121826" font-family="Georgia, serif" font-size="72" font-weight="600">Que hay pa' aprender?</text>
+  <text x="120" y="430" fill="#3A4458" font-family="Arial, sans-serif" font-size="34">Conocimiento para todos. Gratis, abierto y sin humo.</text>
+</svg>

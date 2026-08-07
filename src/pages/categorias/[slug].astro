@@ -1,0 +1,141 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import ArticleCard from '../../components/ArticleCard.astro';
+import Breadcrumbs from '../../components/Breadcrumbs.astro';
+import EmptyState from '../../components/EmptyState.astro';
+import NewsletterCTA from '../../components/NewsletterCTA.astro';
+import { CATEGORIES, getCategoryBySlug } from '../../lib/categories';
+import { getArticlesByCategory } from '../../lib/articles';
+
+export function getStaticPaths() {
+  return CATEGORIES.map((category) => ({
+    params: { slug: category.slug },
+  }));
+}
+
+const { slug } = Astro.params;
+const category = getCategoryBySlug(slug!);
+
+if (!category) {
+  return Astro.redirect('/categorias/');
+}
+
+const articles = await getArticlesByCategory(category.slug);
+---
+
+<BaseLayout
+  title={category.name}
+  description={category.description}
+>
+  <section class="category-page">
+    <div class="container">
+      <Breadcrumbs
+        items={[
+          { label: 'Inicio', href: '/' },
+          { label: 'Categorías', href: '/categorias/' },
+          { label: category.name },
+        ]}
+      />
+
+      <header class={`category-page__header category-page__header--${category.accent}`}>
+        <p class="eyebrow">Categoría</p>
+        <h1>{category.name}</h1>
+        <p>{category.description}</p>
+        <p class="category-page__count">
+          {articles.length}
+          {articles.length === 1 ? 'artículo' : 'artículos'}
+        </p>
+      </header>
+
+      {
+        articles.length > 0 ? (
+          <div class="grid-articles">
+            {articles.map((article, index) => (
+              <ArticleCard article={article} index={index} />
+            ))}
+          </div>
+        ) : (
+          <EmptyState
+            title={`Aún no hay artículos en ${category.name}`}
+            description="Cuando agregues un Markdown con esta categoría en el frontmatter, aparecerá aquí automáticamente."
+            actionLabel="Explorar otros artículos"
+            actionHref="/articulos/"
+          />
+        )
+      }
+
+      <div class="category-page__cta">
+        <NewsletterCTA
+          title={`¿Más sobre ${category.name}?`}
+          description="Explora el resto del catálogo o contribuye con un nuevo artículo en Markdown."
+          primaryHref="/articulos/"
+          secondaryHref="/sobre/#contribuir"
+          secondaryLabel="Cómo contribuir"
+        />
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .category-page {
+    padding: clamp(1.5rem, 3vw, 2.5rem) 0 clamp(3rem, 6vw, 4.5rem);
+  }
+
+  .category-page__header {
+    position: relative;
+    margin-bottom: 2.25rem;
+    padding: clamp(1.4rem, 3vw, 2rem);
+    border-radius: var(--radius-xl);
+    background: var(--color-bg-elevated);
+    border: 1px solid var(--color-border);
+    box-shadow: var(--shadow-sm);
+    overflow: hidden;
+  }
+
+  .category-page__header::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 5px;
+    background: var(--color-yellow);
+  }
+
+  .category-page__header--blue::before {
+    background: var(--color-blue);
+  }
+  .category-page__header--red::before {
+    background: var(--color-red);
+  }
+  .category-page__header--neutral::before {
+    background: var(--color-ink-muted);
+  }
+
+  .category-page__header h1 {
+    font-family: var(--font-serif);
+    font-size: var(--text-4xl);
+    font-weight: 550;
+    letter-spacing: -0.04em;
+    margin-top: 0.45rem;
+  }
+
+  .category-page__header > p:nth-of-type(2) {
+    margin-top: 0.75rem;
+    max-width: 40rem;
+    color: var(--color-ink-soft);
+    font-size: var(--text-lg);
+  }
+
+  .category-page__count {
+    margin-top: 1rem;
+    font-size: var(--text-sm);
+    font-weight: 700;
+    color: var(--color-ink-muted);
+  }
+
+  .category-page__cta {
+    margin-top: 3rem;
+  }
+</style>

@@ -1,0 +1,71 @@
+---
+interface Props {
+  title: string;
+  description?: string;
+  actionLabel?: string;
+  actionHref?: string;
+}
+
+const {
+  title,
+  description = 'Prueba con otras palabras o limpia los filtros.',
+  actionLabel,
+  actionHref,
+} = Astro.props;
+---
+
+<div class="empty">
+  <div class="empty__icon" aria-hidden="true">
+    <svg width="28" height="28" viewBox="0 0 24 24" fill="none">
+      <circle cx="11" cy="11" r="7" stroke="currentColor" stroke-width="1.75"></circle>
+      <path d="M20 20l-3.5-3.5" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"
+      ></path>
+    </svg>
+  </div>
+  <h3>{title}</h3>
+  <p>{description}</p>
+  {
+    actionLabel && actionHref && (
+      <a class="btn btn--secondary" href={actionHref}>
+        {actionLabel}
+      </a>
+    )
+  }
+</div>
+
+<style>
+  .empty {
+    display: grid;
+    justify-items: center;
+    gap: var(--space-3);
+    text-align: center;
+    padding: clamp(2.5rem, 5vw, 4rem) var(--space-4);
+    border: 1px dashed var(--color-border-strong);
+    border-radius: var(--radius-xl);
+    background: var(--color-bg-elevated);
+  }
+
+  .empty__icon {
+    display: grid;
+    place-items: center;
+    width: 3.25rem;
+    height: 3.25rem;
+    border-radius: var(--radius-full);
+    background: var(--color-blue-soft);
+    color: var(--color-blue);
+    margin-bottom: var(--space-2);
+  }
+
+  .empty h3 {
+    font-size: var(--text-xl);
+  }
+
+  .empty p {
+    color: var(--color-ink-muted);
+    max-width: 28rem;
+  }
+
+  .empty .btn {
+    margin-top: var(--space-3);
+  }
+</style>

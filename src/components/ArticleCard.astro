@@ -1,0 +1,297 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import Tag from './Tag.astro';
+import { getCategoryByName } from '../lib/categories';
+import { formatShortDate, readingTimeLabel } from '../lib/utils';
+import { getArticleHref, getArticleReadingTime, getCategoryHref } from '../lib/articles';
+
+interface Props {
+  article: CollectionEntry<'articles'>;
+  variant?: 'default' | 'featured' | 'compact' | 'horizontal';
+  index?: number;
+}
+
+const { article, variant = 'default', index = 0 } = Astro.props;
+const category = getCategoryByName(article.data.category);
+const minutes = getArticleReadingTime(article.body);
+const href = getArticleHref(article);
+const accents = ['yellow', 'blue', 'red'] as const;
+const accent = accents[index % accents.length];
+---
+
+<article class:list={['article-card', `article-card--${variant}`, `article-card--${accent}`]}>
+  <a class="article-card__link" href={href}>
+    <div class="article-card__visual" aria-hidden="true">
+      <div class="article-card__orb"></div>
+      <div class="article-card__pattern"></div>
+      <span class="article-card__glyph">
+        {
+          accent === 'yellow' ? (
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none">
+              <path
+                d="M12 3l1.8 5.2L19 10l-5.2 1.8L12 17l-1.8-5.2L5 10l5.2-1.8L12 3Z"
+                fill="currentColor"></path>
+            </svg>
+          ) : accent === 'blue' ? (
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none">
+              <path
+                d="M5 19V5h4.5l2.2 7.2L14.1 5H19v14h-3.2v-8.4L13.4 19h-2.6L8.4 10.6V19H5Z"
+                fill="currentColor"></path>
+            </svg>
+          ) : (
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none">
+              <path
+                d="M6 4h8.5a4.5 4.5 0 0 1 0 9H9.5V20H6V4Zm3.5 5.8h4.2a2.2 2.2 0 1 0 0-4.4H9.5v4.4Z"
+                fill="currentColor"></path>
+            </svg>
+          )
+        }
+      </span>
+    </div>
+
+    <div class="article-card__body">
+      <div class="article-card__meta">
+        <span class={`article-card__category article-card__category--${category.accent}`}>
+          {article.data.category}
+        </span>
+        <span>{readingTimeLabel(minutes)}</span>
+      </div>
+
+      <h3 class="article-card__title">{article.data.title}</h3>
+      <p class="article-card__desc">{article.data.description}</p>
+
+      <div class="article-card__footer">
+        <div class="article-card__tags">
+          {
+            article.data.tags.slice(0, 3).map((tag) => (
+              <Tag label={tag} tone="neutral" />
+            ))
+          }
+        </div>
+        <time datetime={article.data.publishedAt.toISOString()}>
+          {formatShortDate(article.data.publishedAt)}
+        </time>
+      </div>
+    </div>
+  </a>
+  <a class="article-card__cat-hit" href={getCategoryHref(article.data.category)} tabindex="-1"
+    >{article.data.category}</a
+  >
+</article>
+
+<style>
+  .article-card {
+    position: relative;
+    height: 100%;
+    border-radius: var(--radius-xl);
+    background: var(--color-bg-elevated);
+    border: 1px solid var(--color-border);
+    box-shadow: var(--shadow-sm);
+    overflow: hidden;
+    transition:
+      transform var(--duration) var(--ease-out),
+      box-shadow var(--duration) var(--ease-out),
+      border-color var(--duration) var(--ease-soft);
+  }
+
+  .article-card:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-lg);
+    border-color: rgba(27, 79, 138, 0.16);
+  }
+
+  .article-card__link {
+    display: grid;
+    height: 100%;
+    text-decoration: none;
+    color: inherit;
+    grid-template-rows: auto 1fr;
+  }
+
+  .article-card__visual {
+    position: relative;
+    min-height: 7.5rem;
+    overflow: hidden;
+    background: var(--color-bg-soft);
+  }
+
+  .article-card--yellow .article-card__visual {
+    background: linear-gradient(145deg, #fff7e0, #f3f6fb 60%);
+  }
+
+  .article-card--blue .article-card__visual {
+    background: linear-gradient(145deg, #eaf2fb, #f7f8fa 62%);
+  }
+
+  .article-card--red .article-card__visual {
+    background: linear-gradient(145deg, #f9ecec, #f7f8fa 62%);
+  }
+
+  .article-card__orb {
+    position: absolute;
+    width: 9rem;
+    height: 9rem;
+    border-radius: 50%;
+    right: -2rem;
+    top: -3rem;
+    opacity: 0.55;
+    background: radial-gradient(circle, rgba(230, 168, 0, 0.45), transparent 68%);
+  }
+
+  .article-card--blue .article-card__orb {
+    background: radial-gradient(circle, rgba(27, 79, 138, 0.35), transparent 68%);
+  }
+
+  .article-card--red .article-card__orb {
+    background: radial-gradient(circle, rgba(194, 58, 58, 0.3), transparent 68%);
+  }
+
+  .article-card__pattern {
+    position: absolute;
+    inset: 0;
+    opacity: 0.35;
+    background-image: radial-gradient(rgba(18, 24, 38, 0.08) 1px, transparent 1px);
+    background-size: 12px 12px;
+  }
+
+  .article-card__glyph {
+    position: absolute;
+    left: 1.15rem;
+    bottom: 1.1rem;
+    display: grid;
+    place-items: center;
+    width: 2.75rem;
+    height: 2.75rem;
+    border-radius: 14px;
+    background: rgba(255, 255, 255, 0.82);
+    border: 1px solid var(--color-border);
+    color: var(--color-blue);
+    box-shadow: var(--shadow-xs);
+  }
+
+  .article-card--yellow .article-card__glyph {
+    color: var(--color-yellow-deep);
+  }
+
+  .article-card--red .article-card__glyph {
+    color: var(--color-red);
+  }
+
+  .article-card__body {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    padding: 1.2rem 1.2rem 1.3rem;
+  }
+
+  .article-card__meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.55rem 0.85rem;
+    align-items: center;
+    font-size: var(--text-xs);
+    color: var(--color-ink-muted);
+    font-weight: 600;
+  }
+
+  .article-card__category {
+    font-weight: 750;
+    letter-spacing: 0.02em;
+  }
+
+  .article-card__category--yellow {
+    color: #8a6200;
+  }
+  .article-card__category--blue {
+    color: var(--color-blue);
+  }
+  .article-card__category--red {
+    color: var(--color-red);
+  }
+  .article-card__category--neutral {
+    color: var(--color-ink-soft);
+  }
+
+  .article-card__title {
+    font-family: var(--font-serif);
+    font-size: var(--text-xl);
+    font-weight: 550;
+    letter-spacing: -0.03em;
+    line-height: 1.2;
+  }
+
+  .article-card__desc {
+    color: var(--color-ink-muted);
+    font-size: var(--text-sm);
+    line-height: 1.55;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  .article-card__footer {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: end;
+    justify-content: space-between;
+    gap: 0.75rem;
+    margin-top: auto;
+    padding-top: 0.35rem;
+  }
+
+  .article-card__tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.35rem;
+  }
+
+  .article-card__footer time {
+    font-size: var(--text-xs);
+    color: var(--color-ink-muted);
+    white-space: nowrap;
+  }
+
+  .article-card__cat-hit {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+  }
+
+  .article-card--featured {
+    min-height: 100%;
+  }
+
+  .article-card--featured .article-card__visual {
+    min-height: 10rem;
+  }
+
+  .article-card--featured .article-card__title {
+    font-size: var(--text-2xl);
+  }
+
+  .article-card--compact .article-card__visual {
+    min-height: 5.5rem;
+  }
+
+  .article-card--compact .article-card__desc {
+    -webkit-line-clamp: 2;
+  }
+
+  .article-card--horizontal .article-card__link {
+    grid-template-rows: none;
+    grid-template-columns: 8.5rem 1fr;
+  }
+
+  .article-card--horizontal .article-card__visual {
+    min-height: 100%;
+  }
+
+  @media (max-width: 560px) {
+    .article-card--horizontal .article-card__link {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

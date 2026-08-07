@@ -1,0 +1,87 @@
+---
+interface Props {
+  label: string;
+  href?: string;
+  tone?: 'yellow' | 'blue' | 'red' | 'neutral';
+  size?: 'sm' | 'md';
+  class?: string;
+}
+
+const {
+  label,
+  href,
+  tone = 'neutral',
+  size = 'sm',
+  class: className = '',
+} = Astro.props;
+
+const Tag = href ? 'a' : 'span';
+---
+
+<Tag
+  class:list={['tag', `tag--${tone}`, `tag--${size}`, className]}
+  href={href}
+>
+  {label}
+</Tag>
+
+<style>
+  .tag {
+    display: inline-flex;
+    align-items: center;
+    max-width: 100%;
+    padding: 0.28rem 0.65rem;
+    border-radius: var(--radius-full);
+    font-family: var(--font-sans);
+    font-weight: 650;
+    letter-spacing: -0.01em;
+    line-height: 1.2;
+    text-decoration: none;
+    border: 1px solid transparent;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    transition:
+      background var(--duration-fast) var(--ease-soft),
+      border-color var(--duration-fast) var(--ease-soft),
+      transform var(--duration-fast) var(--ease-out);
+  }
+
+  a.tag:hover {
+    transform: translateY(-1px);
+    text-decoration: none;
+  }
+
+  .tag--sm {
+    font-size: 0.72rem;
+  }
+
+  .tag--md {
+    font-size: 0.8rem;
+    padding: 0.35rem 0.75rem;
+  }
+
+  .tag--neutral {
+    background: var(--color-bg-muted);
+    color: var(--color-ink-soft);
+    border-color: var(--color-border);
+  }
+
+  .tag--yellow {
+    background: var(--color-yellow-soft);
+    color: #7a5600;
+    border-color: rgba(230, 168, 0, 0.28);
+  }
+
+  .tag--blue {
+    background: var(--color-blue-soft);
+    color: var(--color-blue-deep);
+    border-color: rgba(27, 79, 138, 0.18);
+  }
+
+  .tag--red {
+    background: var(--color-red-soft);
+    color: var(--color-red-deep);
+    border-color: rgba(194, 58, 58, 0.18);
+  }
+</style>
