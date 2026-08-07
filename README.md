@@ -27,6 +27,11 @@ npm run build
 npm run preview
 ```
 
+## Contribuir
+
+Repositorio: [github.com/hstev/quehaypaaprender](https://github.com/hstev/quehaypaaprender/)  
+Mantenedor: [@hstev](https://github.com/hstev)
+
 ## Agregar un artículo
 
 Crea un archivo Markdown en `src/content/articles/`:

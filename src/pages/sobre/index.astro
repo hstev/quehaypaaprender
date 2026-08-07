@@ -54,11 +54,20 @@ import Logo from '../../components/Logo.astro';
         <p class="eyebrow">Contribuir</p>
         <h2>Agregar un artículo es crear un Markdown</h2>
         <p>
-          No hay CMS externo ni base de datos. Para publicar, crea un archivo en
-          <code>src/content/articles/</code> con frontmatter y listo: Astro genera la página.
+          No hay CMS externo ni base de datos. El proyecto es abierto: puedes contribuir en
+          <a href="https://github.com/hstev/quehaypaaprender/" rel="noopener noreferrer" target="_blank"
+            >github.com/hstev/quehaypaaprender</a
+          >
+          (usuario
+          <a href="https://github.com/hstev" rel="noopener noreferrer" target="_blank">@hstev</a>).
+        </p>
+        <p>
+          Para publicar, crea un archivo en
+          <code class="about__inline-code">src/content/articles/</code> con frontmatter y listo:
+          Astro genera la página.
         </p>
 
-        <pre class="about__code"><code>---
+        <pre class="about__code" tabindex="0"><code>---
 title: "Tu concepto claro"
 description: "Una frase que diga qué aprenderá la persona."
 category: "Tecnología"
@@ -72,8 +81,13 @@ featured: false
 Escribe aquí con buena estructura, ejemplos y tono humano.</code></pre>
 
         <div class="btn-group">
-          <a class="btn btn--primary" href="/articulos/">Ver artículos</a>
-          <a class="btn btn--secondary" href="/categorias/">Ver categorías</a>
+          <a
+            class="btn btn--primary"
+            href="https://github.com/hstev/quehaypaaprender/"
+            rel="noopener noreferrer"
+            target="_blank">Ver repositorio</a
+          >
+          <a class="btn btn--secondary" href="/articulos/">Ver artículos</a>
         </div>
       </div>
     </div>
@@ -189,12 +203,29 @@ Escribe aquí con buena estructura, ejemplos y tono humano.</code></pre>
     color: var(--color-ink-soft);
   }
 
-  .about__contribute-panel code {
+  .about__contribute-panel > p + p {
+    margin-top: 0.65rem;
+  }
+
+  .about__contribute-panel a {
+    color: var(--color-blue);
+    font-weight: 650;
+    text-decoration: underline;
+    text-underline-offset: 0.15em;
+  }
+
+  .about__contribute-panel a:hover {
+    color: var(--color-blue-deep);
+  }
+
+  .about__inline-code {
     font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
     font-size: 0.86em;
-    padding: 0.1em 0.35em;
+    padding: 0.12em 0.4em;
     border-radius: 6px;
     background: var(--color-bg-muted);
+    border: 1px solid var(--color-border);
+    color: var(--color-ink);
   }
 
   .about__code {
@@ -207,6 +238,16 @@ Escribe aquí con buena estructura, ejemplos y tono humano.</code></pre>
     font-size: 0.84rem;
     line-height: 1.55;
     border: 1px solid rgba(255, 255, 255, 0.06);
+  }
+
+  .about__code code {
+    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+    background: transparent;
+    border: 0;
+    padding: 0;
+    color: inherit;
+    font-size: inherit;
+    white-space: pre;
   }
 
   @media (min-width: 800px) {
