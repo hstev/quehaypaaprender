@@ -29,8 +29,7 @@ npm run preview
 
 ## Contribuir
 
-Repositorio: [github.com/hstev/quehaypaaprender](https://github.com/hstev/quehaypaaprender/)  
-Mantenedor: [@hstev](https://github.com/hstev)
+Repositorio: [Que hay pa' aprender? en GitHub](https://github.com/hstev/quehaypaaprender/)
 
 ## Agregar un artículo
 
