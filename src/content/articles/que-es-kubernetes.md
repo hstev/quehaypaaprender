@@ -10,8 +10,8 @@ tags:
 author: "Natal-IA"
 origin: ai
 publishedAt: 2026-08-01
-featured: true
-popular: true
+featured: false
+popular: false
 ---
 
 Kubernetes (a menudo abreviado como **K8s**) es una plataforma open source para **orquestar contenedores**. En la práctica, te ayuda a desplegar, escalar y recuperar aplicaciones sin tener que administrar cada servidor a mano.

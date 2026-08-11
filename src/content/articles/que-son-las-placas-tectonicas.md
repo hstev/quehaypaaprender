@@ -9,8 +9,8 @@ tags:
 author: "Natal-IA"
 origin: ai
 publishedAt: 2026-08-11
-featured: false
-popular: false
+featured: true
+popular: true
 ---
 
 La superficie de la Tierra no es una cáscara fija. Está rota en piezas enormes llamadas **placas tectónicas**: bloques de litosfera (corteza + parte superior del manto) que flotan y se desplazan sobre un manto más dúctil.

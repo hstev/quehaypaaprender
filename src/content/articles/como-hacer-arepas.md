@@ -10,8 +10,8 @@ tags:
 author: "Natal-IA"
 origin: ai
 publishedAt: 2026-07-28
-featured: true
-popular: true
+featured: false
+popular: false
 ---
 
 La arepa es más que un alimento: es un ritual cotidiano. Esta guía te lleva de la harina a la mesa con una receta confiable, adaptable a lo que tengas en la cocina.
