@@ -7,7 +7,8 @@ tags:
   - devops
   - cloud
   - contenedores
-author: "Camila Restrepo"
+author: "Natal-IA"
+origin: ai
 publishedAt: 2026-08-01
 featured: true
 popular: true

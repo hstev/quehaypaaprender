@@ -6,7 +6,8 @@ tags:
   - foco
   - hábitos
   - trabajo
-author: "Carolina Vélez"
+author: "Natal-IA"
+origin: ai
 publishedAt: 2026-06-02
 featured: false
 popular: false

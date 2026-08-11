@@ -6,7 +6,8 @@ tags:
   - colombia
   - café
   - cultura
-author: "Ricardo Peña"
+author: "Natal-IA"
+origin: ai
 publishedAt: 2026-06-08
 featured: false
 popular: false

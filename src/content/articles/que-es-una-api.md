@@ -7,7 +7,8 @@ tags:
   - http
   - backend
   - fundamentos
-author: "Andrés Quintero"
+author: "Natal-IA"
+origin: ai
 publishedAt: 2026-07-22
 featured: true
 popular: true

@@ -6,7 +6,8 @@ tags:
   - geometría
   - fundamentos
   - aplicaciones
-author: "Natalia Gómez"
+author: "Natal-IA"
+origin: ai
 publishedAt: 2026-06-20
 featured: false
 popular: false

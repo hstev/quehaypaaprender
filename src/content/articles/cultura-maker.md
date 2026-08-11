@@ -6,7 +6,8 @@ tags:
   - maker
   - aprendizaje
   - comunidad
-author: "Equipo QHPA"
+author: "Natal-IA"
+origin: ai
 publishedAt: 2026-05-26
 featured: false
 popular: false

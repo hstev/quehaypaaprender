@@ -7,7 +7,8 @@ tags:
   - colombia
   - maíz
   - desayuno
-author: "Laura Mejía"
+author: "Natal-IA"
+origin: ai
 publishedAt: 2026-07-28
 featured: true
 popular: true

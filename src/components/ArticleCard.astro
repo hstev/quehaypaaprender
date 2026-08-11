@@ -1,6 +1,7 @@
 ---
 import type { CollectionEntry } from 'astro:content';
 import Tag from './Tag.astro';
+import OriginBadge from './OriginBadge.astro';
 import { getCategoryByName } from '../lib/categories';
 import { formatShortDate, readingTimeLabel } from '../lib/utils';
 import { getArticleHref, getArticleReadingTime, getCategoryHref } from '../lib/articles';
@@ -54,6 +55,7 @@ const accent = accents[index % accents.length];
         <span class={`article-card__category article-card__category--${category.accent}`}>
           {article.data.category}
         </span>
+        <OriginBadge origin={article.data.origin} />
         <span>{readingTimeLabel(minutes)}</span>
       </div>
 

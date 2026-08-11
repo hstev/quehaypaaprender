@@ -4,6 +4,7 @@ import Search from '../../components/Search.astro';
 import { getPublishedArticles, getUsedCategories, getAllTags, getArticleHref, getArticleReadingTime } from '../../lib/articles';
 import { formatShortDate, readingTimeLabel } from '../../lib/utils';
 import { getCategoryByName } from '../../lib/categories';
+import { getOriginLabel } from '../../lib/origin';
 
 const articles = await getPublishedArticles();
 const categories = await getUsedCategories();
@@ -17,6 +18,8 @@ const catalog = articles.map((article, index) => ({
   categorySlug: getCategoryByName(article.data.category).slug,
   categoryAccent: getCategoryByName(article.data.category).accent,
   tags: article.data.tags,
+  origin: article.data.origin,
+  originLabel: getOriginLabel(article.data.origin),
   href: getArticleHref(article),
   readingTime: readingTimeLabel(getArticleReadingTime(article.body)),
   date: formatShortDate(article.data.publishedAt),
@@ -176,6 +179,10 @@ const catalog = articles.map((article, index) => ({
           <div class="article-card__body">
             <div class="article-card__meta">
               <span class="article-card__category article-card__category--${article.categoryAccent}">${article.category}</span>
+              <span class="origin-badge origin-badge--${article.origin} origin-badge--sm" title="${article.originLabel}">
+                <span class="origin-badge__dot" aria-hidden="true"></span>
+                <span class="origin-badge__label">${article.originLabel}</span>
+              </span>
               <span>${article.readingTime}</span>
             </div>
             <h3 class="article-card__title">${article.title}</h3>

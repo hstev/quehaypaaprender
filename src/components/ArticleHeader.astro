@@ -1,9 +1,11 @@
 ---
 import type { CollectionEntry } from 'astro:content';
 import Tag from './Tag.astro';
+import OriginBadge from './OriginBadge.astro';
 import { getCategoryByName } from '../lib/categories';
 import { formatDate, readingTimeLabel } from '../lib/utils';
 import { getArticleReadingTime, getCategoryHref } from '../lib/articles';
+import { getOriginHint } from '../lib/origin';
 
 interface Props {
   article: CollectionEntry<'articles'>;
@@ -12,18 +14,30 @@ interface Props {
 const { article } = Astro.props;
 const category = getCategoryByName(article.data.category);
 const minutes = getArticleReadingTime(article.body);
+const origin = article.data.origin;
 ---
 
 <header class="article-header">
-  <a
-    class={`article-header__category article-header__category--${category.accent}`}
-    href={getCategoryHref(article.data.category)}
-  >
-    {article.data.category}
-  </a>
+  <div class="article-header__top">
+    <a
+      class={`article-header__category article-header__category--${category.accent}`}
+      href={getCategoryHref(article.data.category)}
+    >
+      {article.data.category}
+    </a>
+    <OriginBadge origin={origin} size="md" />
+  </div>
 
   <h1>{article.data.title}</h1>
   <p class="article-header__desc">{article.data.description}</p>
+
+  {
+    origin === 'ai' && (
+      <p class="article-header__origin-note" role="note">
+        {getOriginHint(origin)}
+      </p>
+    )
+  }
 
   <div class="article-header__meta">
     <div class="article-header__author">
@@ -53,14 +67,28 @@ const minutes = getArticleReadingTime(article.body);
     margin-bottom: clamp(2rem, 4vw, 3rem);
   }
 
+  .article-header__top {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.65rem 0.85rem;
+    margin-bottom: 1rem;
+  }
+
   .article-header__category {
     display: inline-flex;
-    margin-bottom: 1rem;
     font-size: var(--text-xs);
     font-weight: 750;
     letter-spacing: 0.06em;
     text-transform: uppercase;
     text-decoration: none;
+  }
+
+  .article-header__origin-note {
+    margin-top: 0.85rem;
+    max-width: 40rem;
+    font-size: var(--text-sm);
+    color: var(--color-ink-muted);
   }
 
   .article-header__category--yellow {

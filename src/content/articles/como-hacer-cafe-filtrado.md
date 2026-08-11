@@ -6,7 +6,8 @@ tags:
   - café
   - métodos
   - bebidas
-author: "Diego Palacio"
+author: "Natal-IA"
+origin: ai
 publishedAt: 2026-07-08
 featured: false
 popular: false

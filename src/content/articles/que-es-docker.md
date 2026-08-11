@@ -6,7 +6,8 @@ tags:
   - docker
   - contenedores
   - devops
-author: "Mateo Cárdenas"
+author: "Natal-IA"
+origin: ai
 publishedAt: 2026-07-12
 featured: false
 popular: false

@@ -43,6 +43,7 @@ category: "Tecnología"
 tags:
   - ejemplo
 author: "Tu nombre"
+origin: human
 publishedAt: 2026-08-07
 featured: false
 popular: false
@@ -50,6 +51,8 @@ popular: false
 
 Contenido en Markdown…
 ```
+
+Usa `origin: human` para artículos escritos por una persona y `origin: ai` para los generados o asistidos por IA. Si no lo defines, se asume `human`.
 
 Las rutas se generan automáticamente en `/articulos/[slug]/`.
 

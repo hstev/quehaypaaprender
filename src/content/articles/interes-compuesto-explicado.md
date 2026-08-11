@@ -6,7 +6,8 @@ tags:
   - finanzas-personales
   - inversión
   - educación-financiera
-author: "Julián Herrera"
+author: "Natal-IA"
+origin: ai
 publishedAt: 2026-06-28
 featured: false
 popular: true

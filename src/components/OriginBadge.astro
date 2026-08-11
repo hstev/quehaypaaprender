@@ -1,0 +1,24 @@
+---
+import type { ArticleOrigin } from '../lib/origin';
+import { getOriginHint, getOriginLabel } from '../lib/origin';
+
+interface Props {
+  origin?: ArticleOrigin;
+  size?: 'sm' | 'md';
+  showHint?: boolean;
+  class?: string;
+}
+
+const { origin = 'human', size = 'sm', showHint = false, class: className = '' } = Astro.props;
+const label = getOriginLabel(origin);
+const hint = getOriginHint(origin);
+---
+
+<span
+  class:list={['origin-badge', `origin-badge--${origin}`, `origin-badge--${size}`, className]}
+  title={hint}
+>
+  <span class="origin-badge__dot" aria-hidden="true"></span>
+  <span class="origin-badge__label">{label}</span>
+  {showHint && <span class="origin-badge__hint">{hint}</span>}
+</span>

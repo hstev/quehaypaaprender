@@ -6,7 +6,8 @@ tags:
   - ui
   - tipografía
   - fundamentos
-author: "Isabella Duarte"
+author: "Natal-IA"
+origin: ai
 publishedAt: 2026-06-14
 featured: false
 popular: false

@@ -10,6 +10,8 @@ const articles = defineCollection({
     category: z.string(),
     tags: z.array(z.string()).default([]),
     author: z.string().default('Equipo QHPA'),
+    /** Cómo se escribió el artículo: persona real o generado/asistido por IA. */
+    origin: z.enum(['human', 'ai']).default('human'),
     publishedAt: z.coerce.date(),
     updatedAt: z.coerce.date().optional(),
     featured: z.boolean().default(false),

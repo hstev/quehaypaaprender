@@ -6,7 +6,8 @@ tags:
   - git
   - control-de-versiones
   - colaboración
-author: "Sofía Vargas"
+author: "Natal-IA"
+origin: ai
 publishedAt: 2026-07-18
 featured: false
 popular: true

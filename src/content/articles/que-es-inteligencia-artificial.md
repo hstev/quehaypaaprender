@@ -6,7 +6,8 @@ tags:
   - ia
   - machine-learning
   - tecnología
-author: "Valentina Rojas"
+author: "Natal-IA"
+origin: ai
 publishedAt: 2026-07-04
 featured: true
 popular: true
