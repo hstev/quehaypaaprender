@@ -5,7 +5,7 @@ import mdx from '@astrojs/mdx';
 
 // https://astro.build/config
 export default defineConfig({
-  site: 'https://quehaypaaprender.org',
+  site: 'https://quehaypaaprender.co',
   integrations: [sitemap(), mdx()],
   markdown: {
     shikiConfig: {

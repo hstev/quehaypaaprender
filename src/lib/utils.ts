@@ -33,7 +33,7 @@ export function readingTimeLabel(minutes: number): string {
   return minutes === 1 ? '1 min de lectura' : `${minutes} min de lectura`;
 }
 
-export function absoluteUrl(path: string, site = 'https://quehaypaaprender.org'): string {
+export function absoluteUrl(path: string, site = 'https://quehaypaaprender.co'): string {
   const base = site.replace(/\/$/, '');
   const clean = path.startsWith('/') ? path : `/${path}`;
   return `${base}${clean}`;
