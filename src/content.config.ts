@@ -17,6 +17,15 @@ const articles = defineCollection({
     featured: z.boolean().default(false),
     popular: z.boolean().default(false),
     draft: z.boolean().default(false),
+    /** Preguntas para FAQPage (resultados enriquecidos / prueba SEO). */
+    faq: z
+      .array(
+        z.object({
+          question: z.string(),
+          answer: z.string(),
+        }),
+      )
+      .optional(),
   }),
 });
 

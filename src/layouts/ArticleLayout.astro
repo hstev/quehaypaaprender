@@ -19,7 +19,9 @@ interface Props {
 
 const { article, headings, related, prev, next } = Astro.props;
 
-const jsonLd = {
+const articleUrl = absoluteUrl(getArticleHref(article));
+
+const articleJsonLd = {
   '@context': 'https://schema.org',
   '@type': 'Article',
   headline: article.data.title,
@@ -35,11 +37,28 @@ const jsonLd = {
     name: "Que hay pa' aprender?",
     url: absoluteUrl('/'),
   },
-  mainEntityOfPage: absoluteUrl(getArticleHref(article)),
+  mainEntityOfPage: articleUrl,
   keywords: article.data.tags.join(', '),
   articleSection: article.data.category,
   inLanguage: 'es-CO',
 };
+
+const faqJsonLd = article.data.faq?.length
+  ? {
+      '@context': 'https://schema.org',
+      '@type': 'FAQPage',
+      mainEntity: article.data.faq.map((item) => ({
+        '@type': 'Question',
+        name: item.question,
+        acceptedAnswer: {
+          '@type': 'Answer',
+          text: item.answer,
+        },
+      })),
+    }
+  : null;
+
+const jsonLd = faqJsonLd ? [articleJsonLd, faqJsonLd] : articleJsonLd;
 ---
 
 <BaseLayout
